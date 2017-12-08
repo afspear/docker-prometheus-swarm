@@ -36,7 +36,26 @@ services:
     hostname: "{{.Node.ID}}"
     environment:
       HOST_HOSTNAME: /etc/host_hostname
-    command: -collector.procfs "/host/proc" -collector.sysfs /host/sys -collector.textfile.directory /etc/node-exporter/ -collectors.enabled 'conntrack,diskstats,entropy,filefd,filesystem,loadavg,mdadm,meminfo,netdev,netstat,stat,textfile,time,vmstat,ipvs' -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($$|/)"
+    command: 
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.textfile.directory=/etc/node-exporter/'
+      - '--collector.ipvs'       
+      - '--collector.vmstat'       
+      - '--collector.time'       
+      - '--collector.textfile'       
+      - '--collector.stat'       
+      - '--collector.netstat'       
+      - '--collector.netdev'       
+      - '--collector.meminfo'       
+      - '--collector.mdadm'       
+      - '--collector.loadavg'       
+      - '--collector.filesystem'       
+      - '--collector.filefd'       
+      - '--collector.entropy'       
+      - '--collector.diskstats'       
+      - '--collector.conntrack'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
     deploy:
       mode: global
       resources:
